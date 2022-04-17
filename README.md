@@ -14,3 +14,8 @@ If answer is close to zero then it is picture of cat and if the answer is close 
 Ps: All files created or downloaded should be in same directory.
 
 PPs: The main program execution can take 3-5 hrs depending on each system.
+
+Note: For more info about project visit: https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
+
+
+#Credits: machinelearningmastery.com
