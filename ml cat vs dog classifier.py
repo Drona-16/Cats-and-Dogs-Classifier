@@ -1,4 +1,5 @@
 '''
+#Step-1
 # plot dog photos from the dogs vs cats dataset
 from matplotlib import pyplot
 from matplotlib.image import imread
@@ -18,7 +19,9 @@ for i in range(9):
 pyplot.show()
 '''
 
+
 '''
+#Step-2
 # plot cat photos from the dogs vs cats dataset
 from matplotlib import pyplot
 from matplotlib.image import imread
@@ -40,6 +43,7 @@ pyplot.show()
 
 
 '''
+#Step-3
 # create directories
 import os
 dataset_home = 'dataset_dogs_vs_cats/'
@@ -55,6 +59,7 @@ for subdir in subdirs:
 
 
 '''
+#Step-4
 #shifting image into test and train dataset
 # organize dataset into a useful structure
 from os import makedirs
@@ -92,6 +97,7 @@ for file in listdir(src_directory):
 
 
 '''
+#Step-5
 # organize dataset into a useful structure
 from os import makedirs
 from os import listdir
@@ -118,81 +124,8 @@ for file in listdir(src_directory):
 
 
 
-
-# baseline model for the dogs vs cats dataset ie vgg
-import sys
-from matplotlib import pyplot
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import Dense
-from keras.layers import Flatten
-from tensorflow.keras.optimizers import SGD
-from keras.preprocessing.image import ImageDataGenerator
-
-# define cnn model
-def define_model():
-	model = Sequential()
-	model.add(Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same', input_shape=(200, 200, 3)))
-	model.add(MaxPooling2D((2, 2)))
-	model.add(Flatten())
-	model.add(Dense(128, activation='relu', kernel_initializer='he_uniform'))
-	model.add(Dense(1, activation='sigmoid'))
-	# compile model
-	opt = SGD(learning_rate=0.001, momentum=0.9)
-	model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
-	return model
-
-# plot diagnostic learning curves
-def summarize_diagnostics(history):
-	# plot loss
-	pyplot.subplot(211)
-	pyplot.title('Cross Entropy Loss')
-	pyplot.plot(history.history['loss'], color='blue', label='train')
-	pyplot.plot(history.history['val_loss'], color='orange', label='test')
-	# plot accuracy
-	pyplot.subplot(212)
-	pyplot.title('Classification Accuracy')
-	pyplot.plot(history.history['accuracy'], color='blue', label='train')
-	pyplot.plot(history.history['val_accuracy'], color='orange', label='test')
-	# save plot to file
-	filename = sys.argv[0].split('/')[-1]
-	pyplot.savefig(filename + '_plot.png')
-	pyplot.close()
-
-# run the test harness for evaluating a model
-def run_test_harness():
-	# define model
-	model = define_model()
-	# create data generator
-	datagen = ImageDataGenerator(rescale=1.0/255.0)
-	# prepare iterators
-	train_it = datagen.flow_from_directory('dataset_dogs_vs_cats/train/',
-		class_mode='binary', batch_size=64, target_size=(200, 200))
-	test_it = datagen.flow_from_directory('dataset_dogs_vs_cats/test/',
-		class_mode='binary', batch_size=64, target_size=(200, 200))
-	# fit model
-	history = model.fit(train_it, steps_per_epoch=len(train_it),
-		validation_data=test_it, validation_steps=len(test_it), epochs=20, verbose=0)
-	# evaluate model
-	_, acc = model.evaluate_generator(test_it, steps=len(test_it), verbose=0)
-	print('> %.3f' % (acc * 100.0))
-	# learning curves
-	summarize_diagnostics(history)
-
-# entry point, run the test harness
-run_test_harness()
-
-#OUTPUT
-Found 18697 images belonging to 2 classes.
-Found 6303 images belonging to 2 classes.
-> 72.331
-
-
-
-
 '''
+#step-6
 # save the final model to file
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
@@ -241,6 +174,7 @@ run_test_harness()
 
 
 '''
+#step-7
 # make a prediction for a new image.
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
@@ -262,7 +196,7 @@ def load_image(filename):
 # load an image and predict the class
 def run_example():
 	# load the image
-	img = load_image('cheetah.jpg')
+	img = load_image('sample.jpg')
 	# load model
 	model = load_model('final_model.h5')
 	# predict the class
