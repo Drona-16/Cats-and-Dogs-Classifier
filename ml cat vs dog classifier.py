@@ -1,3 +1,5 @@
+# After downloading dataset uncomment each part of program and execute it step by step
+
 '''
 #Step-1
 # plot dog photos from the dogs vs cats dataset
